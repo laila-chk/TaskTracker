@@ -12,6 +12,7 @@ import jakarta.persistence.*;
 @Table(name = "task_lists")
 public class TaskList {
 
+  @Id
   @Column(name = "id", nullable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
