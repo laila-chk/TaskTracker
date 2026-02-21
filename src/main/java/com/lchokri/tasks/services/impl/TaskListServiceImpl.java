@@ -1,5 +1,6 @@
 package com.lchokri.tasks.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,4 +22,29 @@ public class TaskListServiceImpl implements TaskListService {
   public List<TaskList> listTaskList() {
     return taskListRepository.findAll();
   }
+
+
+  @Override
+  public TaskList createTaskList(TaskList taskList){
+    //making sure that the task list is new!
+    if (taskList.getId() != null)
+      throw new IllegalArgumentException("this task list already have an id!");
+    //making sure args are valid:
+    if(taskList.getTitle() == null || taskList.getTitle().isBlank())
+      throw new IllegalArgumentException("Task list title is mandatory!");
+
+    LocalDateTime now = LocalDateTime.now();
+
+    return taskListRepository.save(new TaskList(
+      null,
+      taskList.getTitle(),
+      taskList.getDescription(),
+      null,
+      now,
+      now
+    ));
+  }
+
+
+
 }
